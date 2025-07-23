@@ -30,12 +30,12 @@ import {
   LucideX,
 } from "lucide-react";
 import { useRef } from "react";
-import showVideoPopup from "@/app/test/extensions/video/VideoPopup";
-import showAiPopup from "@/app/test/extensions/ai/AiPopup";
-import { showCustomLinkPopup } from "@/app/test/extensions/link/CustomLinkPopup";
-import showEmojiPopup from "@/app/test/extensions/emoji/emojiPopup";
+import showVideoPopup from "@/app/extensions/video/VideoPopup";
+import showAiPopup from "@/app/extensions/ai/AiPopup";
+import { showCustomLinkPopup } from "@/app/extensions/link/CustomLinkPopup";
+import showEmojiPopup from "@/app/extensions/emoji/emojiPopup";
 import { Button, Dropdown, MenuProps } from "antd";
-import showImagePopup from "@/app/test/extensions/image/ImagePopup";
+import showImagePopup from "@/app/extensions/image/ImagePopup";
 
 export default function Toolbar({ editor }: { editor: Editor | null }) {
   // codeBlock内にいるかどうかをチェックする関数
