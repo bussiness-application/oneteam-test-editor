@@ -19,7 +19,7 @@ import CustomCodeBlock from "@/app/extensions/codeBlock/CustomCodeBlock";
 import Video from "@/app/extensions/video/Video";
 import History from "@tiptap/extension-history";
 import CharacterCount from "@tiptap/extension-character-count";
-import CustomImage from "@/app/extensions/CustomImage";
+import CustomImage from "@/app/extensions/image/CustomImage";
 import FileHandler from "@tiptap/extension-file-handler";
 import SlashCommand from "@/app/extensions/commandList/SlashCommands";
 import { FontSize } from "@/app/extensions/FontSize";

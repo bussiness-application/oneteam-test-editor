@@ -8,6 +8,11 @@ declare module "@tiptap/core" {
     customOrderedList: {
       toggleCustomOrderedList: () => ReturnType;
     };
+    customImage: {
+      insertImage: (
+        options: { src: string; alt?: string; title?: string },
+      ) => ReturnType;
+    };
     video: {
       insertVideo: (url: string) => ReturnType;
     };

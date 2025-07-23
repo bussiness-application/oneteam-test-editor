@@ -12,6 +12,7 @@ import {
   LucideHeading1,
   LucideHeading2,
   LucideHeading3,
+  LucideImage,
   LucideItalic,
   LucideLink,
   LucideList,
@@ -29,11 +30,12 @@ import {
   LucideX,
 } from "lucide-react";
 import { useRef } from "react";
-import showVideoPopup from "@/app/extensions/video/VideoPopup";
-import showAiPopup from "@/app/extensions/ai/AiPopup";
-import { showCustomLinkPopup } from "@/app/extensions/link/CustomLinkPopup";
-import showEmojiPopup from "@/app/extensions/emoji/emojiPopup";
+import showVideoPopup from "@/app/test/extensions/video/VideoPopup";
+import showAiPopup from "@/app/test/extensions/ai/AiPopup";
+import { showCustomLinkPopup } from "@/app/test/extensions/link/CustomLinkPopup";
+import showEmojiPopup from "@/app/test/extensions/emoji/emojiPopup";
 import { Button, Dropdown, MenuProps } from "antd";
+import showImagePopup from "@/app/test/extensions/image/ImagePopup";
 
 export default function Toolbar({ editor }: { editor: Editor | null }) {
   // codeBlock内にいるかどうかをチェックする関数
@@ -220,10 +222,17 @@ export default function Toolbar({ editor }: { editor: Editor | null }) {
   const linkButtonRef = useRef<HTMLButtonElement>(null);
   const aiButtonRef = useRef<HTMLButtonElement>(null);
   const emojiButtonRef = useRef<HTMLButtonElement>(null);
+  const imageButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleLinkClick = () => {
     if (linkButtonRef.current && editor) {
       showCustomLinkPopup(linkButtonRef.current, editor);
+    }
+  };
+
+  const handleImageClick = () => {
+    if (imageButtonRef.current && editor) {
+      showImagePopup(imageButtonRef.current, editor);
     }
   };
 
@@ -658,7 +667,16 @@ export default function Toolbar({ editor }: { editor: Editor | null }) {
         </button>
         <button
           type="button"
-          className={`toolbar-btn ${editor.isActive("Video") ? "active" : ""}`}
+          className={`toolbar-btn ${editor.isActive("image") ? "active" : ""}`}
+          onClick={handleImageClick}
+          ref={imageButtonRef}
+          title="画像"
+        >
+          <LucideImage size={14} />
+        </button>
+        <button
+          type="button"
+          className={`toolbar-btn ${editor.isActive("video") ? "active" : ""}`}
           onClick={handleVideoClick}
           ref={videoButtonRef}
           title="動画"

@@ -1,6 +1,9 @@
 import Image from "@tiptap/extension-image";
+import { Command } from "@tiptap/core";
 
 const CustomImage = Image.extend({
+  name: "customImage",
+
   addAttributes() {
     return {
       src: {
@@ -80,6 +83,20 @@ const CustomImage = Image.extend({
       },
     };
   },
+
+  addCommands() {
+    return {
+      insertImage:
+        (options: { src: string; alt?: string; title?: string }): Command =>
+        ({ commands }) => {
+          return commands.insertContent({
+            type: this.name,
+            attrs: options,
+          });
+        },
+    } as any;
+  },
+
   addNodeView() {
     return ({ node, editor, getPos }) => {
       const {
