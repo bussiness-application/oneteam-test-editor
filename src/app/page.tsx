@@ -22,7 +22,7 @@ import Link from "@tiptap/extension-link";
 import History from "@tiptap/extension-history";
 import Placeholder from "@tiptap/extension-placeholder";
 import CharacterCount from "@tiptap/extension-character-count";
-import CustomImage from "@/app/extensions/CustomImage";
+import CustomImage from "@/app/extensions/image/CustomImage";
 import FileHandler from "@tiptap/extension-file-handler";
 import { all, createLowlight } from "lowlight";
 import js from "highlight.js/lib/languages/javascript";
