@@ -1,0 +1,382 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans", sans-serif;
+}
+
+// BUTTON
+.ant-btn.ant-btn-lg {
+  font-size: 14px;
+  height: 36px;
+  font-weight: 500;
+}
+
+// MENU
+.ant-menu {
+  .ant-menu-item {
+    margin: 0;
+    height: 34px;
+    font-size: 14px;
+    &:hover {
+      background: none !important;
+    }
+  }
+  .ant-menu-item-selected {
+    background: #ffeee0;
+    color: black;
+    font-weight: 600;
+    &:hover {
+      background: #ffeee0 !important;
+    }
+  }
+  .ant-menu-item.createpost-item:first-child {
+    color: #d86800;
+    margin-bottom: 24px;
+    &:hover {
+      color: #d86800 !important;
+    }
+  }
+}
+
+a {
+  color: #d86800 !important;
+  &:hover {
+    color: #d86800 !important;
+  }
+}
+
+.ellipsis {
+  text-overflow: ellipsis; /* enables ellipsis */
+  white-space: nowrap; /* keeps the text in a single line */
+  overflow: hidden; /* keeps the element from overflowing its parent */
+}
+
+.multiline-ellipsis {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* start showing ellipsis when 3rd line is reached */
+  white-space: pre-wrap; /* let the text wrap preserving spaces */
+}
+
+// TABLE
+.ant-table-thead .ant-table-cell {
+  background-color: #fff7f0 !important;
+  border-top: 2px solid #d86800;
+}
+
+.ant-table-wrapper .ant-table-container table > thead > tr:first-child {
+  *:first-child {
+    border-start-start-radius: 0;
+  }
+  *:last-child {
+    border-start-end-radius: 0;
+  }
+}
+.ant-table-placeholder {
+  z-index: 1000 !important;
+}
+
+// MODAL
+.ant-modal {
+  .ant-modal-content {
+    border-radius: 10px;
+    padding: 20px 20px;
+  }
+  .ant-modal-title {
+    padding-right: 10px;
+  }
+  .ant-modal-close-x {
+    font-size: 17px;
+    color: black;
+  }
+}
+
+// FORM
+.ant-form-vertical .ant-form-item-label {
+  padding: 0 0 5px;
+  label {
+    font-weight: 500;
+    font-size: 13.5px;
+  }
+}
+.ant-form-item {
+  margin-bottom: 16px;
+  .ant-form-item-extra {
+    font-size: 12px;
+  }
+}
+.ant-input {
+  border: 1px solid #dbdbdb;
+}
+.ant-input:placeholder-shown {
+  font-weight: 500;
+}
+
+// DRAWER
+.ant-drawer-header {
+  margin: 0;
+  padding: 16px !important;
+}
+
+// TAB
+.custom-tabs {
+  .ant-tabs-nav-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .ant-tabs-tab {
+    width: 50%;
+    justify-content: center;
+  }
+
+  // Fix: evenly spaced tabs flickering issue
+  .ant-tabs > .ant-tabs-nav .ant-tabs-nav-operations-hidden,
+  .ant-tabs > div > .ant-tabs-nav .ant-tabs-nav-operations-hidden {
+    all: revert;
+  }
+}
+
+// SCROLLBAR
+.ot-modal::-webkit-scrollbar {
+  width: 6px;
+}
+.ot-modal::-webkit-scrollbar-thumb {
+  background: #d9d9d9;
+  border-radius: 4px;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+// Hide scrollbar for IE, Edge and Firefox
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+// Input.Search
+.input-search-class
+  > .ant-input-group
+  > .ant-input-group-addon:last-child
+  .ant-input-search-button:not(.ant-btn-primary) {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Checkbox
+.ant-checkbox-inner {
+  width: 18px;
+  height: 18px;
+
+  &::after {
+    width: 6px;
+    height: 9.600000021px;
+  }
+}
+.ant-checkbox + span {
+  padding-left: 12px;
+}
+
+// Collapse
+.ant-collapse-header {
+  background-color: #fcf8ff;
+}
+.ant-collapse-header-text {
+  font-weight: 500;
+  flex: auto !important;
+}
+
+// Button
+.hover-none-button:hover {
+  color: initial !important;
+  border-color: #dbdbdb !important;
+}
+
+// Upload
+.ant-upload-list-item-done {
+  color: #d86800;
+  cursor: pointer;
+}
+
+.ql-container em {
+  font-family: monospace !important;
+}
+.ql-container img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+}
+.ql-container {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  line-height: 1.5;
+  text-align: left;
+}
+.ql-container a,
+.ql-container p{
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.ql-container td {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+}
+@media (max-width: 768px){
+  .ql-container table {
+    width: 100%;
+    font-size: xx-small;
+  }
+  .ql-container span {
+    font-size: xx-small;
+  }
+  .ql-container font{
+    font-size: 9px;
+  }
+}
+.ql-container tr {
+  display: table-row;
+}
+
+.ql-bubble .ql-editor blockquote {
+  border-left: 4px solid #ccc;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 16px;
+}
+
+@layer utilities {
+  .default-text {
+    @apply antialiased overflow-hidden text-black;
+  }
+  .default-border {
+    @apply border border-solid border-gainsboro rounded-md;
+  }
+  .resetborder-t {
+    @apply border-0 border-t border-solid;
+  }
+  .resetborder-b {
+    @apply border-0 border-b border-solid;
+  }
+  .resetborder-r {
+    @apply border-0 border-r border-solid;
+  }
+  .text-tertiary {
+    @apply font-medium text-xs;
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .text-headline {
+    @apply text-lg font-semibold;
+  }
+  .switch-extra {
+    @apply text-[12px] opacity-60;
+  }
+  .form-title {
+    @apply text-[13.5px] font-medium;
+  }
+  .form-extra {
+    @apply text-[#00000073] text-xs;
+  }
+  .text-label {
+    @apply font-bold opacity-90;
+  }
+  .text-link {
+    @apply font-medium text-primary cursor-pointer;
+  }
+  .text-disbaled {
+    @apply text-black opacity-30;
+  }
+}
+
+.info-label {
+  color: #00000099;
+  font-size: 11px;
+  margin-top: 8px;
+}
+
+.editor-label {
+  float: right;
+  color: #d86800;
+  font-size: 12px;
+  margin-top: -16px;
+}
+
+.transparentModal .ant-modal-content,
+.transparentModal .ant-modal-header {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.unreadBadge {
+  @apply w-4 h-4 bg-primary text-white rounded-full absolute text-[10px] font-bold flex justify-center items-center shrink-0;
+}
+.bhdLno {
+  width: 30vw !important;
+  height: 30vw !important;
+  margin: auto;
+}
+.gameModal .ant-modal-title {
+  text-align: center;
+  margin: 20px auto;
+}
+.gameModal.result .ant-modal-title {
+  color: red;
+  font-size: 50px;
+  font-weight: bold;
+}
+.gameModal.cancel .ant-modal-title {
+  text-align: center;
+  font-size: 20px;
+}
+.ant-upload-wrapper .ant-upload-drag .ant-upload {
+  padding: 0 !important;
+}
+.item-search-class {
+  .ant-input-affix-wrapper {
+    border-radius: 20px 0 0 20px !important;
+  }
+  button {
+    border-radius: 0px 20px 20px 0 !important;
+    background: #e5e5e599;
+  }
+}
+.backgroundImage {
+  max-width: 100%;
+  max-height: auto;
+  padding-top: 3pt;
+  padding-bottom: 2pt;
+}
+
+
+
+/* @layer base {
+  @font-face {
+    font-family: "Noto Sans", sans-serif;
+    font-weight: 400;
+    src: url("../assets/fonts/NotoSans-Regular.woff") format("woff");
+  }
+} */
+
+/* @layer components {} */
+
+.video-not-ready {
+  background-color: black;
+  color: white;
+  width: 250px;
+  padding: 10% 10px;
+  text-align: center;
+}

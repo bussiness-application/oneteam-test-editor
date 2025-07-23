@@ -1,0 +1,691 @@
+/* CSS変数の定義 */
+:root {
+  --gray-3: #d1d5db;
+  --gray-5: #6b7280;
+  --purple: #6366f1;
+  --purple-light: #eef2ff;
+  --purple-contrast: #4f46e5;
+  --red: #dc2626;
+  --text-color: #1f2937;
+  --bg-color: #ffffff;
+  --black: #000000;
+}
+
+.btn {
+  @apply px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-100 text-sm font-medium transition-colors duration-200;
+}
+
+.toolbar-btn {
+  all: unset;
+  cursor: pointer;
+  padding: 6px 6px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  background: white;
+  border: 1px solid #d1d5db;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.toolbar-btn:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.toolbar-btn.active {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.toolbar-container {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-bottom: 1px solid #e2e8f0;
+  padding: 12px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.editor-container {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background: white;
+}
+
+.editor-content {
+  width: 100%;
+  min-height: 300px;
+  line-height: 1.6;
+  position: relative;
+}
+
+.editor-content .ProseMirror {
+  outline: none;
+  min-height: 260px;
+  padding-left: 60px;
+  padding-right: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  [data-id] {
+    border: 3px solid #0d0d0d;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    position: relative;
+    margin-top: 1.5rem;
+    padding: 2rem 1rem 1rem;
+
+    &::before {
+      content: attr(data-id);
+      background-color: #0d0d0d;
+      font-size: 0.6rem;
+      letter-spacing: 1px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #fff;
+      position: absolute;
+      top: 0;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0 0 0.5rem 0.5rem;
+    }
+  }
+}
+
+.editor-content .ProseMirror h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 24px 0 16px 0;
+  color: #1f2937;
+}
+
+.editor-content .ProseMirror blockquote {
+  border-left: 4px solid #3b82f6;
+  margin: 16px 0;
+  padding: 0 16px 0 20px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* プレースホルダーのスタイル - DivBlock対応 */
+.ProseMirror div.is-editor-empty:first-child::before,
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #b3b3b1;
+  pointer-events: none;
+  height: 0;
+}
+
+.select-size {
+  min-width: 80px;
+  padding-left: 30px;
+  padding-right: 8px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: white;
+  cursor: pointer;
+  font-weight: 500;
+  appearance: none;
+  position: relative;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.select-size:hover {
+  border-color: #9ca3af;
+  background: #f9fafb;
+}
+
+.select-size:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  outline: none;
+}
+
+/* select要素のドロップダウンメニューのスタイル */
+.select-size option {
+  border: none;
+  background: white;
+  color: #374151;
+  padding: 6px 6px;
+}
+
+/* select要素のドロップダウンメニュー全体のスタイル */
+.select-size:focus option {
+  border: none;
+  outline: none;
+}
+
+/* Webkit系ブラウザ（Chrome、Safari）用 */
+.select-size::-webkit-listbox {
+  border: none;
+  outline: none;
+}
+
+.select-size::-webkit-option {
+  border: none;
+  outline: none;
+}
+
+/* Firefox用 */
+.select-size:-moz-focusring {
+  outline: none;
+  border: none;
+}
+
+/* IE/Edge用 */
+.select-size::-ms-expand {
+  display: none;
+}
+
+/* ChevronDownアイコンのコンテナスタイル */
+.select-container {
+  position: relative;
+  display: inline-block;
+}
+
+.select-container .chevron-icon {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #6b7280;
+  z-index: 1;
+  transition: color 0.2s ease;
+}
+
+.select-container:hover .chevron-icon {
+  color: #374151;
+}
+
+.color-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  font-size: 14px;
+  color: var(--text-color, #000);
+}
+
+.bg-color-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  color: var(--text-color, #000);
+}
+
+.details {
+  display: flex;
+  gap: 0.25rem;
+  border: 1px solid var(--gray-3);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+/* カスタム箇条書きリスト */
+.custom-bullet-list {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: 2px;
+  color: inherit;
+  fill: inherit;
+}
+
+/* カスタム番号付きリスト */
+/* カウンターの初期化 */
+.editor-content .ProseMirror {
+  counter-reset: ordered-list-counter bullet-list-counter;
+}
+
+.custom-ordered-list {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: 2px;
+  color: inherit;
+  fill: inherit;
+  counter-increment: ordered-list-counter;
+}
+
+.custom-bullet-list {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: 2px;
+  color: inherit;
+  fill: inherit;
+  counter-increment: bullet-list-counter;
+}
+
+.custom-task-list {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: 2px;
+  color: inherit;
+  fill: inherit;
+}
+
+.bullet-marker-container {
+  user-select: none;
+  margin-right: 2px;
+  width: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  min-height: calc(1.5em + 6px);
+}
+
+.bullet-marker {
+  width: 24px;
+  text-align: center;
+  white-space: nowrap;
+  color: #6b7280;
+  font-weight: bold;
+}
+
+.bullet-marker::before {
+  content: "•";
+}
+
+.ordered-marker-container {
+  user-select: none;
+  margin-right: 2px;
+  width: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  min-height: calc(1.5em + 6px);
+}
+
+.ordered-marker {
+  width: 24px;
+  text-align: center;
+  white-space: nowrap;
+  color: #6b7280;
+  font-weight: bold;
+}
+
+.ordered-marker::before {
+  content: counter(ordered-list-counter) ".";
+}
+
+.ordered-content-container {
+  flex: 1 1 0px;
+  min-width: 1px;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-marker-container {
+  user-select: none;
+  width: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  min-height: calc(1.5em + 6px);
+  pointer-events: auto !important;
+  z-index: 10 !important;
+}
+
+.task-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #3b82f6;
+  pointer-events: auto !important;
+  z-index: 10 !important;
+  position: relative;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background-color: white !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 2px !important;
+  appearance: auto !important;
+  -webkit-appearance: auto !important;
+  -moz-appearance: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.task-checkbox:checked {
+  background-color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+}
+
+.task-checkbox:hover {
+  border-color: #3b82f6 !important;
+}
+
+.task-checkbox:focus {
+  outline: 2px solid #3b82f6 !important;
+  outline-offset: 1px !important;
+}
+.task-content-container {
+  flex: 1 1 0px;
+  min-width: 1px;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-content-container.checked {
+  text-decoration: line-through !important;
+  color: #6b7280 !important;
+}
+
+.bullet-content-container {
+  flex: 1 1 0px;
+  min-width: 1px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* バブルメニューのスタイル */
+.bubble-menu-container {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+}
+
+.bubble-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.bubble-menu-item button {
+  all: unset;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  background: transparent;
+  border: none;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  12n-width: 12px;
+  height: 12px;
+}
+
+.bubble-menu-item button:hover {
+  background: #f3f4f6;
+  color: #1f2937;
+  transform: translateY(-1px);
+}
+
+.bubble-menu-item button:active {
+  background: #e5e7eb;
+  transform: translateY(0);
+}
+
+/* アクティブ状態のボタン */
+.bubble-menu-item button[data-active="true"] {
+  background: #3b82f6;
+  color: white;
+}
+
+.bubble-menu-item button[data-active="true"]:hover {
+  background: #2563eb;
+  color: white;
+}
+
+code {
+  background-color: var(--purple-light);
+  border-radius: 0.4rem;
+  color: var(--black);
+  font-size: 0.85rem;
+  padding: 0.25em 0.3em;
+}
+
+/* Character count */
+.character-count {
+  align-items: center;
+  color: var(--gray-5);
+  display: flex;
+  font-size: 0.75rem;
+  gap: 0.5rem;
+  margin: 1.5rem;
+
+  svg {
+    color: var(--purple);
+  }
+
+  &--warning,
+  &--warning svg {
+    color: var(--red);
+  }
+}
+
+.editor-content .ProseMirror img {
+  display: block;
+  height: auto;
+  margin: 1.5rem 0;
+  max-width: 100%;
+
+  &.ProseMirror-selectednode {
+    outline: 3px solid var(--purple);
+  }
+}
+
+.drag-handle {
+  align-items: center;
+  cursor: grab;
+  display: flex;
+  height: 25px;
+  justify-content: center;
+  width: 20px;
+  transition: all 0.2s ease;
+  color: #6b7280;
+
+  &:hover {
+    background: #e0e0e0;
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.add-row {
+  width: 20px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #6b7280;
+
+  &:hover {
+    background: #e0e0e0;
+    border-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+.code-block-wrapper {
+  position: relative;
+  margin: 1rem 0;
+}
+
+.code-block-content {
+  background-color: rgb(247, 246, 243);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  position: relative;
+  padding-top: 3.5rem; /* 2.5remから3.5remに変更 */
+}
+
+.code-block-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+/* 言語選択器のスタイル（必要に応じて） */
+.language-selector {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  color: #374151;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.language-selector:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: #cbd5e1;
+}
+
+.language-selector:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+pre {
+  background: var(--black);
+  border-radius: 0.5rem;
+  color: var(--white);
+  font-family: "JetBrainsMono", monospace;
+  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+
+  code {
+    background: none;
+    color: inherit;
+    font-size: 0.8rem;
+    padding: 0;
+  }
+
+  /* Code styling */
+  .hljs-comment,
+  .hljs-quote {
+    color: #708090;
+  }
+
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-attribute,
+  .hljs-tag,
+  .hljs-regexp,
+  .hljs-link,
+  .hljs-name,
+  .hljs-selector-id,
+  .hljs-selector-class {
+    color: #f98181;
+  }
+
+  .hljs-number,
+  .hljs-meta,
+  .hljs-built_in,
+  .hljs-builtin-name,
+  .hljs-literal,
+  .hljs-type,
+  .hljs-params {
+    color: #905;
+  }
+
+  .hljs-string,
+  .hljs-symbol,
+  .hljs-bullet {
+    color: #690;
+  }
+
+  .hljs-title,
+  .hljs-section {
+    color: #905;
+  }
+
+  .hljs-keyword,
+  .hljs-selector-tag {
+    color: #07a;
+  }
+
+  .hljs-emphasis {
+    font-style: italic;
+  }
+
+  .hljs-strong {
+    font-weight: 700;
+  }
+}
+
+/* スラッシュコマンド */
+.command-menu {
+  font-size: 14px;
+  min-width: 150px;
+}
+.command-menu div {
+  padding: 5px 10px;
+  cursor: pointer;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+}
+
+/* 絵文字ポップアップのスタイル */
+.emoji-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+/* AI生成コンテンツのハイライト表示 */
+[data-ai-timestamp] {
+  background-color: rgba(34, 197, 94, 0.1);
+  border-left: 3px solid #22c55e;
+  padding-left: 8px;
+  position: relative;
+}
+
+/* ホバー時の効果 */
+[data-ai-timestamp]:hover {
+  background-color: rgba(34, 197, 94, 0.15);
+}
