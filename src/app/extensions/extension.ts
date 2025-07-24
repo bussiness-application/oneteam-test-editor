@@ -33,6 +33,7 @@ import { AiGenerated } from "@/app/extensions/ai/AiGenerated";
 import { CustomTable } from "@/app/extensions/table/CustomTable";
 import { CustomTableRow } from "@/app/extensions/table/CustomTableRow";
 import { CustomTableCell } from "@/app/extensions/table/CustomTableCell";
+import DropCursor from "@tiptap/extension-dropcursor";
 
 const lowlight = createLowlight(all);
 
@@ -45,6 +46,7 @@ export const extensions = [
   DivBlock, // paragraphを拡張し、divタグに置き換える拡張
   GapCursor,
   EmptyBlockHandler,
+  DropCursor,
 
   // オプション1
   Heading,

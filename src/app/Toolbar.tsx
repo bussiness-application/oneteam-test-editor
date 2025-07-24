@@ -339,7 +339,7 @@ export default function Toolbar({ editor }: { editor: Editor | null }) {
           </Button>
         </Dropdown>
         <Dropdown
-          dropdownRender={() => (
+          popupRender={() => (
             <div
               style={{
                 display: "flex",

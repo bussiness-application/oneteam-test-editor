@@ -91,7 +91,7 @@ export default function BubbleMenuContent({
           <LucideCode size={16} />
         </button>
         <Dropdown
-          dropdownRender={() => (
+          popupRender={() => (
             <div
               style={{
                 display: "flex",
