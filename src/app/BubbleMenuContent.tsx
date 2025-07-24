@@ -8,7 +8,7 @@ import {
   LucideStrikethrough,
   LucideUnderline,
 } from "lucide-react";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 import showAiPopup from "@/app/extensions/ai/AiPopup";
 import { showCustomLinkPopup } from "@/app/extensions/link/CustomLinkPopup";
 import { Button, Dropdown } from "antd";
@@ -20,6 +20,18 @@ export default function BubbleMenuContent({
 }) {
   const linkButtonRef = useRef<HTMLButtonElement>(null);
   const aiButtonRef = useRef<HTMLButtonElement>(null);
+
+  // バブルメニューを非表示にする条件
+  const shouldHideBubbleMenu = useCallback(() => {
+    if (!editor) return false;
+
+    if (editor.isActive("codeBlock")) return true;
+    if (editor.isActive("customLink")) return true;
+    if (editor.isActive("aiGenerated")) return true;
+    if (editor.isActive("customTable")) return true;
+    if (editor.isActive("customImage")) return true;
+    if (editor.isActive("video")) return true;
+  }, [editor]);
 
   const handleLinkClick = () => {
     if (linkButtonRef.current && editor) {
@@ -33,7 +45,7 @@ export default function BubbleMenuContent({
     }
   };
 
-  if (!editor) return null;
+  if (!editor || shouldHideBubbleMenu()) return null;
 
   return (
     <div className="bubble-menu-container">
