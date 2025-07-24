@@ -46,7 +46,10 @@ export const extensions = [
   DivBlock, // paragraphを拡張し、divタグに置き換える拡張
   GapCursor,
   EmptyBlockHandler,
-  DropCursor,
+  DropCursor.configure({
+    color: "#2383e247",
+    width: 3,
+  }),
 
   // オプション1
   Heading,
