@@ -15,7 +15,7 @@ class Dragging {
 
 type DragInfo = {
   dom: HTMLElement;
-  nodeSelection: NodeSelection;
+  textSelection: { from: number; to: number };
 };
 
 type Props = {
@@ -30,12 +30,52 @@ export default function CustomDragHandle({ editor }: Props) {
 
   const setTopBlockDragInfo = useCallback(
     (pos: number) => {
+      // 位置が有効かチェック
+      if (pos < 0 || pos >= editor.state.doc.content.size) {
+        return;
+      }
+
       const $pos = editor.state.doc.resolve(pos);
 
-      setDragInfo({
-        dom: editor.view.domAtPos($pos.start(1)).node as HTMLElement,
-        nodeSelection: NodeSelection.create(editor.state.doc, $pos.before(1)),
-      });
+      // ブロックレベルが存在するかチェック
+      if ($pos.depth < 1) {
+        return;
+      }
+
+      // より確実なDOM要素の取得
+      let domNode: HTMLElement;
+      try {
+        domNode = editor.view.domAtPos($pos.start(1)).node as HTMLElement;
+        // ブロック要素が見つからない場合は、親要素を探す
+        if (!domNode || domNode === editor.view.dom) {
+          domNode = editor.view.domAtPos($pos.before(1)).node as HTMLElement;
+        }
+      } catch (error) {
+        console.warn("Failed to get DOM node:", error);
+        return;
+      }
+
+      // より安全なテキスト範囲を取得
+      const blockStart = $pos.start(1);
+      let blockEnd = $pos.end(1);
+
+      // ブロックが空の場合でもハンドルを表示する
+      // 空のブロックの場合は、ブロックの開始位置を選択範囲にする
+      if (blockStart >= blockEnd) {
+        blockEnd = blockStart + 1; // 空のブロックでも1文字分の範囲を作る
+      }
+
+      // より包括的なブロック検出
+      const block = $pos.node(1);
+
+      // テキストブロック、見出し、リスト、その他のブロック要素を対象にする
+      if (block.isBlock) {
+        // 空のブロックでもハンドルを表示する（ドラッグ可能にする）
+        setDragInfo({
+          dom: domNode,
+          textSelection: { from: blockStart, to: blockEnd },
+        });
+      }
     },
     [editor],
   );
@@ -43,20 +83,42 @@ export default function CustomDragHandle({ editor }: Props) {
   const handleClick = useCallback(() => {
     if (dragInfo == null) return;
 
-    editor.chain().focus().setNodeSelection(dragInfo.nodeSelection.from).run();
+    try {
+      // 選択範囲が有効かチェック
+      const { from, to } = dragInfo.textSelection;
+      if (from >= to || from < 0 || to > editor.state.doc.content.size) {
+        return;
+      }
+
+      editor.chain().focus().setTextSelection({ from, to }).run();
+    } catch (error) {
+      console.warn("Failed to set text selection:", error);
+    }
   }, [editor, dragInfo]);
 
   const handleDragStart = useCallback(
     (ev: DragEvent) => {
       if (dragInfo === null) return;
 
-      ev.dataTransfer.setDragImage(dragInfo.dom, 0, 0);
-      ev.dataTransfer.effectAllowed = "copyMove";
-      editor.view.dragging = new Dragging(
-        dragInfo.nodeSelection.content(),
-        true,
-        dragInfo.nodeSelection,
-      );
+      try {
+        ev.dataTransfer.setDragImage(dragInfo.dom, 0, 0);
+        ev.dataTransfer.effectAllowed = "copyMove";
+
+        // テキスト選択の内容をドラッグ（安全な範囲チェック）
+        const { from, to } = dragInfo.textSelection;
+        if (from >= to || from < 0 || to > editor.state.doc.content.size) {
+          return;
+        }
+
+        const slice = editor.state.doc.slice(from, to);
+        editor.view.dragging = new Dragging(
+          slice,
+          true,
+          undefined, // NodeSelectionは使用しない
+        );
+      } catch (error) {
+        console.warn("Failed to start drag:", error);
+      }
     },
     [editor, dragInfo],
   );
@@ -65,7 +127,7 @@ export default function CustomDragHandle({ editor }: Props) {
     if (dragInfo == null) return;
 
     // 現在のブロックの後に新しい段落を挿入
-    const insertPos = dragInfo.nodeSelection.to;
+    const insertPos = dragInfo.textSelection.to;
 
     editor
       .chain()
@@ -81,6 +143,7 @@ export default function CustomDragHandle({ editor }: Props) {
   useEffect(() => {
     // エディターコンテナを取得
     const editorContainer = editor.view.dom.closest(".editor-content");
+
     if (editorContainer) {
       setPortalContainer(editorContainer as HTMLElement);
     }
@@ -94,7 +157,20 @@ export default function CustomDragHandle({ editor }: Props) {
       });
       if (!pos) return;
 
-      setTopBlockDragInfo(Math.min(pos.pos, editor.state.doc.content.size - 1));
+      // 安全な位置範囲内に制限（最後の位置も含める）
+      const maxPos = editor.state.doc.content.size;
+      const safePos = Math.max(0, Math.min(pos.pos, maxPos));
+
+      // 最後の位置の場合は、最後のブロックの位置を取得
+      if (safePos === maxPos && maxPos > 0) {
+        const $lastPos = editor.state.doc.resolve(maxPos - 1);
+        if ($lastPos.depth >= 1) {
+          setTopBlockDragInfo($lastPos.start(1));
+          return;
+        }
+      }
+
+      setTopBlockDragInfo(safePos);
     };
 
     const clearDragInfo = () => {
@@ -109,7 +185,9 @@ export default function CustomDragHandle({ editor }: Props) {
     };
   }, [editor, setTopBlockDragInfo]);
 
-  if (dragInfo == null || !portalContainer) return null;
+  if (dragInfo == null || !portalContainer) {
+    return null;
+  }
 
   const rect = dragInfo.dom.getBoundingClientRect();
   const containerRect = portalContainer.getBoundingClientRect();
